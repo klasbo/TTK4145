@@ -6,6 +6,7 @@ Exercise 1 : Hello World
 
 Brainstorm some techniques you could use to prevent Sverre from being hopelessly stranded.
  - Think about the worst-case behaviour of the system. [http://xkcd.com/748/](http://xkcd.com/748/)
+ - Software crashing, communication failing, users being trolls, etc.
 
  
 2: Set up source control and build tools
@@ -14,11 +15,11 @@ Brainstorm some techniques you could use to prevent Sverre from being hopelessly
 A version control system is a tool helps a group of people work on the same files in a systematic and safe manner, allowing multiple users to make changes to the same file and merge the changes later, and the creation of branches for experimenting with new features in parallel to the main branch. It also keeps track of all versions of files, so that you can revert all changes made since a given date.
 You will need some place to store your files, either a decentralized repository online (eg [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/) (which also has free private repos)) or centralized on a common group directory at an external server (do not use the machines on the lab for storage, because you never know who might delete it). You can apply for a group directory [here](http://www.stud.ntnu.no/kundesenter/).
 
- - You can find more info on using the version control commands here: [Git](http://git-scm.com/), [SVN](http://svnbook.org/), [Mercurial](http://mercurial.selenic.com/)
- - Try [UnGit](https://github.com/FredrikNoren/ungit) for a simpler interface for git. [The video](http://youtu.be/hkBVAi3oKvo) is worth looking at even if you don't plan to use UnGit, since it's a nice explanation of how version control works
+ - You can find more info on using the version control console commands here: [Git](http://git-scm.com/), [SVN](http://svnbook.org/), [Mercurial](http://mercurial.selenic.com/)
+ - Try [UnGit](https://github.com/FredrikNoren/ungit) as a simpler interface for git. [The video](http://youtu.be/hkBVAi3oKvo) is worth looking at even if you don't plan to use UnGit, since it's a nice explanation of how version control works
 
 You will probably also want to set up your preferred workflow for coding. Browse through the available text editors and IDEs, and find something that is comfortable to work with. If there is a tool you need that isn't there, tell us.
-When you start working on the project, you may also want to set up a build system, either with a makefile or just a shell script. Since the need for this is both language-dependent and IDE-dependent, we won't go into any details here
+When you start working on the project, you may also want to set up a build system, either with a makefile or just a shell script. Since the need for this is both language-dependent and IDE-dependent, we won't go into any details here.
 
  
 3: Why concurrency?
@@ -62,6 +63,6 @@ What happens?
 5: @property typeof(this) save(){}
 ----------------------------------
 
-Upload to your repository. You will fix this problem in Exercise 2.
+Upload to your repository. You will fix the problem from part 4 in Exercise 2.
 
 
