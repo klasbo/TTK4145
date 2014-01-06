@@ -31,7 +31,7 @@ Why do we use concurrent execution (multithreading/multiprocessing, or the like)
  
 What are the differences between processes, threads, green threads, and fibers?
  - Which one of these do `pthread_create()` (C/POSIX), `threading.Thread()` (Python), `go` (Go) create?
- - How does pythons Global Interpreter Lock influence the way a python Thread behaves?
+ - How does pythons Global Interpreter Lock (GIL) influence the way a python Thread behaves?
  - With this in mind: What is the workaround for the GIL (Hint: it's another module)? How do you then share resources (variables/data)?
  - What does `func GOMAXPROCS(n int) int` change?
  
@@ -60,7 +60,16 @@ Implement this in C, Python and Go:
 What happens?
 
 
-5: @property typeof(this) save(){}
+5: Four Errors
+--------------
+
+Run `four_errors.d` with `rdmd four_errors.d`.
+ - What are the four things printed by line 22? ("Error! i is #")
+ - Why do we get four things when `i` is only ever set to two different values?
+ 
+
+
+6: @property typeof(this) save(){}
 ----------------------------------
 
 Upload to your repository. You will fix the problem from part 4 in Exercise 2.
