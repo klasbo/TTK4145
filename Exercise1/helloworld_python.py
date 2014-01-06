@@ -8,9 +8,9 @@ def adder():
 # In Python you "import" a global variable, instead of "export"ing it when you declare it
     global i
     
-# In Python 2 this is generates a list of integers (which takes time),
+# In Python 2 this generates a list of integers (which takes time),
 # while in Python 3 this is an iterable (which is much faster to generate).
-# In python 2, the iterable is created with xrange()
+# In python 2, an iterable is created with xrange()
     for x in range(0, 1000000):     
         i += 1
 

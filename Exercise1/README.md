@@ -63,7 +63,7 @@ What happens?
 5: Four Errors
 --------------
 
-Run `four_errors.d` with `rdmd four_errors.d`.
+Run `four_errors.d` with `rdmd four_errors.d` from the command line.
  - What are the four things printed by line 22? ("Error! i is #")
  - Why do we get four things when `i` is only ever set to two different values?
  

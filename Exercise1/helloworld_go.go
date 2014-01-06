@@ -1,4 +1,5 @@
 // Go 1.2
+// go run helloworld_go.go
 
 package main
 
