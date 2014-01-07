@@ -1,9 +1,8 @@
-// Tested on a virtual machine with one core
-// gcc -std=gnu99 -Wall -g -lpthread -ohelloworld_c helloworld_c.c
+// gcc 4.7.2 +
+// gcc -std=gnu99 -Wall -g -lpthread -o helloworld_c helloworld_c.c
 
 #include <pthread.h>
 #include <stdio.h>
-#include <unistd.h>
 
 int i = 0;
 
@@ -21,9 +20,6 @@ int main(){
     pthread_t adder_thr;
     pthread_create(&adder_thr, NULL, adder, NULL);
     for(int x = 0; x < 50; x++){
-        // usleep(20);          // May just be necessary for my single-core VM
-                                // Just to show that actual counting happens
-                                // (ie. it isn't optimized away)
         printf("%i\n", i);
     }
 
