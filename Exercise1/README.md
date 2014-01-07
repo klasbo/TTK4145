@@ -1,8 +1,24 @@
 Exercise 1 : Hello World
 ========================
 
+A note about the computers at the real-time lab:
+ - They run Linux Mint, Linux Ubuntu and Windows
+ - The Ubuntu install is deprecated (it no longer receives security updates), so we are in the process of transitioning to Mint
+ - However, the Mint install does not support the Comedi library we will (probably) be using to interface with the elevator hardware... yet.
+ - Compiler versions on the Ubuntu install are older, so use Mint maybe?
+ - Conclusion: We'll ~~cross~~ burn that bridge when we get to it
+This exercise does not require that you use the machines at the real-time lab, although the C code uses POSIX.
+
+Since we are still in the startup-phase, there are no real groups and lab-times this week (7th to 10th Jan.). Due-date is therefore 17th January.
+
+[Go](http://golang.org) has an interactive "Tour" you can take. Its syntax is a bit different, so it may be worth skimming through, or at least using as a quick reference.
+
+
+
 1: Thinking about elevators
 ---------------------------
+
+Not for handing in, just for thinking about.
 
 Brainstorm some techniques you could use to prevent Sverre from being hopelessly stranded.
  - Think about the worst-case behaviour of the system. [http://xkcd.com/748/](http://xkcd.com/748/)
@@ -16,7 +32,7 @@ A version control system is a tool helps a group of people work on the same file
 You will need some place to store your files, either a decentralized repository online (eg [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/) (which also has free private repos)) or centralized on a common group directory at an external server (do not use the machines on the lab for storage, because you never know who might delete it). You can apply for a group directory [here](http://www.stud.ntnu.no/kundesenter/).
 
  - You can find more info on using the version control console commands here: [Git](http://git-scm.com/), [SVN](http://svnbook.org/), [Mercurial](http://mercurial.selenic.com/)
- - Try [UnGit](https://github.com/FredrikNoren/ungit) as a simpler interface for git. [The video](http://youtu.be/hkBVAi3oKvo) is worth looking at even if you don't plan to use UnGit, since it's a nice explanation of how version control works
+ - Try [UnGit](https://github.com/FredrikNoren/ungit) as a simpler interface for git. [The video](http://youtu.be/hkBVAi3oKvo) is worth looking at even if you don't plan to use UnGit, since it's a nice explanation of how version control works. NOTE: node.js isn't installed on the machines on the real-time lab yet (I've asked for it to happen). For the time being: Either use git from the command line, or try it on your own machine.
 
 You will probably also want to set up your preferred workflow for coding. Browse through the available text editors and IDEs, and find something that is comfortable to work with. If there is a tool you need that isn't there, tell us.
 When you start working on the project, you may also want to set up a build system, either with a makefile or just a shell script. Since the need for this is both language-dependent and IDE-dependent, we won't go into any details here.
@@ -25,7 +41,9 @@ When you start working on the project, you may also want to set up a build syste
 3: Why concurrency?
 ----------------------
 
-Why do we use concurrent execution (multithreading/multiprocessing, or the like)? List a fair few (3+) reasons.
+These things should be google-able:
+
+Why do we use concurrent execution (multithreading/multiprocessing, or the like)? List a fair few reasons.
  - How can adding more concurrent tasks make programming simpler? (Think about translation from idea to code...)
  - And how can it make programming more difficult? (Maybe come back to this after you have worked on part 4 of this exercise)
  
@@ -60,18 +78,19 @@ Implement this in C, Python and Go:
 What happens?
 
 
-5: Four Errors
+5: @property typeof(this) save(){}
+----------------------------------
+
+Upload to your repository. You will fix the problem from part 4 in Exercise 2.
+
+
+
+6: Four Errors
 --------------
 
 Run `four_errors.d` with `rdmd four_errors.d` from the command line.
  - What are the four things printed by line 22? ("Error! i is #")
  - Why do we get four things when `i` is only ever set to two different values?
  
-
-
-6: @property typeof(this) save(){}
-----------------------------------
-
-Upload to your repository. You will fix the problem from part 4 in Exercise 2.
 
 
