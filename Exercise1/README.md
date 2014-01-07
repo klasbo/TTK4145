@@ -9,7 +9,7 @@ A note about the computers at the real-time lab:
  - Conclusion: We'll ~~cross~~ burn that bridge when we get to it
 This exercise does not require that you use the machines at the real-time lab, although the C code uses POSIX.
 
-Since we are still in the startup-phase, there are no real groups and lab-times this week (7th to 10th Jan.). Due-date is therefore 17th January.
+Since we are still in the startup-phase, there are no real groups and assigned lab-times this week (7th to 10th Jan.), which means the workspaces are "first come, first served". Due-date is therefore 17th January.
 
 [Go](http://golang.org) has an interactive "Tour" you can take. Its syntax is a bit different, so it may be worth skimming through, or at least using as a quick reference.
 
