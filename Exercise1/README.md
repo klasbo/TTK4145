@@ -60,6 +60,7 @@ What are the differences between processes, threads, green threads, and fibers?
 --------------------
 
 Implement this in C, Python and Go:
+Look at the examples in this directory for how to create threads.
 
     main:
         global shared int i = 0
