@@ -5,7 +5,8 @@ A note about the computers at the real-time lab:
  - They run Linux Mint, Linux Ubuntu and Windows
  - The Ubuntu install is deprecated (it no longer receives security updates), so we are in the process of transitioning to Mint
  - However, the Mint install does not support the Comedi library we will (probably) be using to interface with the elevator hardware... yet.
- - Compiler versions on the Ubuntu install are older, so use Mint maybe?
+ - ~~Compiler versions on the Ubuntu install are older, so use Mint maybe?~~
+ - EDIT: do not use Mint, since pthreads don't work properly
  - Conclusion: We'll ~~cross~~ burn that bridge when we get to it
 This exercise does not require that you use the machines at the real-time lab, although the C code uses POSIX.
 
