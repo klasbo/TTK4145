@@ -1,5 +1,5 @@
 // gcc 4.7.2 +
-// gcc -std=gnu99 -Wall -g -lpthread -o helloworld_c helloworld_c.c
+// gcc -std=gnu99 -Wall -g -o helloworld_c helloworld_c.c -lpthread
 
 #include <pthread.h>
 #include <stdio.h>
