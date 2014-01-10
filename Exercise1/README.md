@@ -60,7 +60,7 @@ What are the differences between processes, threads, green threads, and fibers?
 --------------------
 
 Implement this in C, Python and Go:
-Look at the examples in this directory for how to create threads.
+Look at the "helloworld" examples in this directory (top of this page) for how to create threads.
 
     main:
         global shared int i = 0
@@ -76,13 +76,13 @@ Look at the examples in this directory for how to create threads.
         do 1_000_000 times:
             i--
             
-What happens?
+What happens, and why?
 
 
 5: @property typeof(this) save(){}
 ----------------------------------
 
-Upload to your repository. You will fix the problem from part 4 in Exercise 2.
+You will fix the above problem in Exercise 2, so you should save your code for later. If you have created a repository, use this opportunity and start putting it to use.
 
 
 
