@@ -30,14 +30,15 @@ The lights should function as expected.
 
 Simplifications
 ---------------
-Try to create something that works at a base level first, before adding more advanced features. You are of course free to include any or all (or more) of these from the start.
+Try to create something that works at a base level first, before adding more advanced features. You are of course free to include any or all (or more) of these optional features from the start.
 
+You can make these simplifications and still get full score:
  - At least one elevator is always alive
  - Stop button & Obstruction switch are disabled
    - Their functionality (if/when implemented) is up to you.
- - Communication is reliable
-   - Absolutely do avoid this simplification, as it is a large source of potential failures
-   - Only for those with lower ambition levels
+ - No multiple simultatneous errors: Only one error happens at a time, but the system must still return to a fail-safe state after this error
+ - No network partitioning: A situation where there are multiple sets of two or more elevators with no connection between them
+   
    
 Start with 1 <= n <= 3 elevators, and m == 4 floors. Try to avoid hard-coding these values: You should be able to add a fourth elevator with no extra configuration, or change the number of floors with minimal configuration. You do, however, not need to test for n > 3 and m != 4.
 
