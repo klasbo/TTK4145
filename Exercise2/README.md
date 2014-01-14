@@ -31,8 +31,14 @@ Use fine-grained concurrency: The two threads are supposed to intermingle, so ru
 
 We are doing Go a great disservice in this exercise, since it has a message-passing no-sharing approach to concurrency. With that said, we will still go further down the wrong path and use shared variables, with blatant disregard for the proper way of doing things. We have two major alternatives:
  - Put the shared resource `i` in a buffered channel, and read from (when there is a value there) & write to (when we are done modifying our local copy) that channel.
+   - You will have to assign the value of the local copy to the global value on each iteration, otherwise the global value will never be changed.
  - Something more "semaphore-like", where the shared resource `i` is not in a channel, but we instead put a value representing "ownership" on a buffered channel.
-   - You would "take ownership" when there is a value on the channel, and "give back" ownership by putting something on the channel
+   - You would "take ownership" when there is a value on the channel, and "give back" ownership by putting something on the channel.
+
+We also have a more idiomatic way:
+ - Create a server that [`select{}`](http://golang.org/ref/spec#Select_statements)s transformations to its own data. Have two other goroutines tell the server to increment & decrement its local variable.
+   - Note that this variable will no longer be global. The proper way to handle this is to create another `select{}`-case where you receive requests for the value.
+
 
 Remember from Exercise 1 where we had no good way of waiting for a goroutine to finish? Try sending a message on a separate channel. If you use different channels for the two threads, you will have to use [`select { case... }`](http://golang.org/ref/spec#Select_statements) so that it doesn't matter what order they arrive in.
 
