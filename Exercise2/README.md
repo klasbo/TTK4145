@@ -16,7 +16,7 @@ ___
 
 Solve [the concurrent access problem from Exercise 1](https://github.com/klasbo/TTK4145/tree/master/Exercise1#4-finally-some-code), such that the final result is always zero.
 
-Use fine-grained concurrency: The two threads are supposed to intermingle, so running them one after the other would somewhat defeat the purposse.
+Make sure that the two threads intermingle. Running them one after the other would somewhat defeat the purpose.
 
 (It may be useful to change the number of iterations in one of the threads, such that the expected final result is not zero (say, -1). This way it is easier to see that your solution actually works, and isn't just printing the initial value)
 
@@ -68,7 +68,7 @@ Extra reading material
 
 [Different forms of message passing](http://cs.lmu.edu/~ray/notes/messagepassing/), with nice diagrams
 
-[Origins and pitfalls of the recursive mutex](http://zaval.org/resources/library/butenhof1.html). (TL;DR: Recursive mutexes are usually bad, beucase if you need one you're holding a lock for too long)
+[Origins and pitfalls of the recursive mutex](http://zaval.org/resources/library/butenhof1.html). (TL;DR: Recursive mutexes are usually bad, because if you need one you're holding a lock for too long)
 
 
 
