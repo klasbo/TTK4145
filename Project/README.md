@@ -26,6 +26,7 @@ An individual elevator should behave sensibly and efficiently
  - The external "call upward" and "call downward" buttons should behave differently
  
 The lights should function as expected.
+ - In addition, the lights on the external buttons should show the same thing on all n workspaces
 
 
 Simplifications
@@ -83,6 +84,7 @@ Languages
    - [Go by Example](https://gobyexample.com/)
    - [Learning Go](http://www.miek.nl/projects/learninggo/)
    - From [the wiki](http://code.google.com/p/go-wiki/): [Articles](https://code.google.com/p/go-wiki/wiki/Articles), [Talks](https://code.google.com/p/go-wiki/wiki/GoTalks)
+   - [Advanced Go Concurrency Patterns](https://www.youtube.com/watch?v=QDDwwePbDtw): transforming problems into the for-select-loop form
  - [D](http://dlang.org/)
    - [The book](http://www.amazon.com/exec/obidos/ASIN/0321635361/) by Andrei Alexandrescu ([Chapter 1](http://www.informit.com/articles/article.aspx?p=1381876), [Chapter 13](http://www.informit.com/articles/article.aspx?p=1609144))
    - [Programming in D](http://ddili.org/ders/d.en/)
