@@ -29,6 +29,8 @@ The TCP server can send you two of these:
 The server will read until it encounters the first `\0`, regardless.
 
 Sharing a socket between threads should not be a problem, although reading from a socket in two threads will probably mean that only one of the threads get the message. If you are using blocking sockets, you could create a "receiving"-thread for each socket. Alternatively, you can use socket sets and a select-statement.
+
+Be nice to the network: Put some amount of `sleep()` or equivalent in the loops that send messages. The network at the lab will be shut off if IT finds a DDOS-esque level of traffic. Yes, this has happened before. Several times.
     
     
 Exercise
