@@ -21,6 +21,18 @@ Interface to the C code, and create a driver for the elevator in the language yo
    - If you include it, you should only notify the "owner" of the driver instance when an event happens (eg a button is pushed, a floor is reached, etc).
    - The owner should preferably state which events it is listening to. Unused events should at least not leak resources.
 
+####Note for Go:
+When you create `io.go` (or equivalent) to wrap the C functions, you need to include this at the top of your file:
+    
+    package driver  // where "driver" is the folder that contains io.go, io.c, io.h, channels.go, channels.c and driver.go
+    /*
+    #cgo LDFLAGS: -lcomedi -lm
+    #include "io.h"
+    */
+    import "C"
+
+Even though it looks like a multiline comment, it is actually evaluated. See [the `cgo` command](http://golang.org/cmd/cgo/).
+
    
 ###2:
 Write a test program to make sure that the driver works as expected.
@@ -34,3 +46,4 @@ Write a test program to make sure that the driver works as expected.
 Optional: Now that you have defined the behaviour of the driver by its functions, you can create a mock elevator that doesn't rely on Comedi or the hardware. With this virtual/simulated elevator, you can test the rest of your program without using the elevator itself, allowing you to work from anywhere.
 
 Only do this if you feel the time spent is worthwhile.
+
