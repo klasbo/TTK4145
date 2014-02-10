@@ -15,9 +15,9 @@ You will need some form of communication between the primary and the backup. Som
    - Note for the project: You should really use reliable reads and writes here. Perhaps your distributed storage could be the other elevators?
  - Controlled shared memory: The system functions [`shmget()` and `shmat()`](http://pubs.opengroup.org/onlinepubs/7990989775/xsh/sysshm.h.html) let processes share memory.
 
-You will also need to spawn the backup somehow. There should be a way to spawn processes or run shell commands in the standard library of your language of choice.
+You will also need to spawn the backup somehow. There should be a way to spawn processes or run shell commands in the standard library of your language of choice. The name of the terminal window is OS-dependent, on Mint it is `mate-terminal`. Use `-x` to run a program in a new window, eg `mate-terminal -x rdmd pair.d`.
 
-Be careful! You don't want to create a [chain reaction...](http://en.wikipedia.org/wiki/Fork_bomb)
+Be careful! You don't want to create a [chain reaction...](http://en.wikipedia.org/wiki/Fork_bomb) If you do, you can use `pkill -f program_name` as a sledgehammer.
 
 (Note for the project: Usually a program crashes for a reason. Restoring the program to the same state as it died in may cause it to crash in exactly the same way, all over again.)
  
