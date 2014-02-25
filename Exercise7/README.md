@@ -12,6 +12,8 @@ This is the first of a two-part exercise: This time we will look at one way of d
 
 Compile using `gnatmake`
 
+The code you are completing can be found [here](https://github.com/klasbo/TTK4145/blob/master/Exercise7/exercise7.adb).
+
 
 ###Desired functionality:
 We are modelling a transaction with three participants, where each performs a calculation that is slow when it works correctly, but fails quickly when it fails. The work from each should not be committed (in this case: printed to the standard output) unless _all_ participants succeed. When any participant fails, the work from all the others will need to be reset, and the transaction has to start over.
