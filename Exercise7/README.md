@@ -6,6 +6,8 @@ This is the first of a two-part exercise: This time we will look at one way of d
 ###Logistical:
 [Intro to Ada](http://www.adaic.org/learn/materials/intro)
 
+[Ada Reference Manual](http://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html)
+
 Compile using `gnatmake`
 
 
