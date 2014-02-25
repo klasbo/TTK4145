@@ -1,9 +1,9 @@
 Exercise 8 :
 ================
 
-Last time we looked at backward error recovery, where upon error all participants in a transaction reverted to a previous consistent state, and started over. In some situations this behaviour is unacceptable, because an error may happen many times in a row, which means there will be no upper bound on the number of retries required. Instead, we have to compensate for the error by finding a new (but sub-optimal) consistent state for the system. This is known as forward error recovery.
+Last time we looked at backward error recovery, where upon error all participants in a transaction reverted to a previous consistent state, and started over. In some situations this behaviour is unacceptable, because an error may happen many times in a row, which means there will be no upper bound on the number of retries required. Instead, we have to compensate for the error by finding a new (but possibly sub-optimal) consistent state for the system. This is known as forward error recovery.
 
-Regardless of if we are using backward or forward error recovery, there may still be participants that are doing work that will never be used, since another participant has already signalled the transaction to be aborted. The Ada language provides a mechanism for notifying tasks asynchronously, so they can be aborted immediately when a certain event triggers. This event can either be a delay, or the condition of a protected object entry becoming true. This mechanism is called "Asynchronous Transfer of Control", or ATC. 
+Regardless of whether we are using backward or forward error recovery, there may still be participants that are doing work that will never be used, since another participant has already signalled the transaction to be aborted. The Ada language provides a mechanism for notifying tasks asynchronously, so they can be aborted immediately when a certain event triggers. This event can either be a delay, or the condition of a protected object entry becoming true. This mechanism is called "Asynchronous Transfer of Control", or ATC. 
 
 In our case we will be using an entry in the transaction manager, where the condition becomes true when the transaction has been aborted by any of the participants.
 
@@ -15,6 +15,7 @@ As before, we call `Unreliable_Slow_Add`. If this fails (raises an exception), a
 ###Part 1: Select-Then-Abort
 
 The structure for Asynchronous Transfer of Control is the "Select-then-abort" statement:
+
     select
         triggering_alternative   -- eg. X.Entry_Call;
         -- code that is run when the triggering_alternative has triggered
@@ -27,7 +28,7 @@ The structure for Asynchronous Transfer of Control is the "Select-then-abort" st
     
 The triggering alternative will be an entry call in the `Manager`, which we will call `Wait_Until_Aborted`. It has not been implemented yet (again, trust your future selves to do a competent job). After this trigger happens, compensate for the error by adding 5, and committing that value instead.
 
-Since we know that 1) the triggering alternative occurs simultaneously and asynchronously in all participating tasks, and 2) that we have an exit protocol that requires all participants to show up, we do not need to ask the manager if we should commit: We commit if all show up in the exit protocol (`Manager.Finished;`), or we do forward error recovery if the trigger triggers (As before, we use `Signal_Abort` to notify the manager). Move or remove code to acheive this.
+Since we know that 1) the triggering alternative occurs simultaneously and asynchronously in all participating tasks, and 2) that we have an exit protocol that requires all participants to show up, we do not need to ask the manager if we should commit: We commit if all show up in the exit protocol (`Manager.Finished;`), or we do forward error recovery if the trigger triggers (As before, we use `Signal_Abort` to notify the manager). Move or remove code to achieve this.
 
 ###Part 2: Create the Wait_Until_Aborted entry
 

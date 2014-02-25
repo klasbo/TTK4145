@@ -15,7 +15,7 @@ We are modelling a transaction with three participants, where each performs a ca
 
 ###Part 1: Create the transaction work function
 
-The "work" the participants are doing is adding 10 to a number. Unoriginal, perhaps, but we can use random numbers to make it serve the purpose of demonstrating work that either success or fails. We will call this function `Unreliable_Slow_Add`.
+The "work" the participants are doing is adding 10 to a number. Unoriginal, perhaps, but we can use random numbers to have it simulate work that either success or fails. We will call this function `Unreliable_Slow_Add`.
 
  - A random number generator `Gen` is defined and seeded for you. Call `Random(Gen)` to get a random number between 0.0 and 1.0.
  - Most of the time, the addition takes up to 4-ish seconds. Use `delay Duration(d)` (where d is a floating-point number) to pause execution for d seconds. You can use `Random(Gen)` multiplied with a constant as the value for d. Then, add 10 to `x` and return the value.
