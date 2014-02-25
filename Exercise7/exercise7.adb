@@ -13,7 +13,6 @@ procedure exercise7 is
       function    Commit return Boolean;
       procedure   Signal_Abort;
    private
-      Num_Ready            : Natural := 0;
       Finished_Gate_Open   : Boolean := False;
       Aborted              : Boolean := False;
       Will_Commit          : Boolean := True;
