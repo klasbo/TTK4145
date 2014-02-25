@@ -8,6 +8,8 @@ This is the first of a two-part exercise: This time we will look at one way of d
 
 [Ada Reference Manual](http://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html)
 
+[Kristoffer Gregertsen's Ada lecture](https://raw.github.com/klasbo/TTK4145/master/exercise7/2014-02-25-ada-ttk4145.pdf)
+
 Compile using `gnatmake`
 
 
