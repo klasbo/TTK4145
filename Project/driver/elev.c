@@ -156,7 +156,7 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value){
             button == BUTTON_CALL_DOWN ||
             button == BUTTON_COMMAND);
 
-    if (value == 1)
+    if (value)
         io_set_bit(lamp_channel_matrix[floor][button]);
     else
         io_clear_bit(lamp_channel_matrix[floor][button]);        
