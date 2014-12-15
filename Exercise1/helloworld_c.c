@@ -4,28 +4,22 @@
 #include <pthread.h>
 #include <stdio.h>
 
-int i = 0;
 
 // Note the return type: void*
-void* adder(){
-    for(int x = 0; x < 1000000; x++){
-        i++;
-    }
+void* someThreadFunction(){
+    printf("Hello from a thread!\n")
     return NULL;
 }
 
 
 
 int main(){
-    pthread_t adder_thr;
-    pthread_create(&adder_thr, NULL, adder, NULL);
-    for(int x = 0; x < 50; x++){
-        printf("%i\n", i);
-    }
-
+    pthread_t someThreadFunction;
+    pthread_create(&someThread, NULL, someThreadFunction, NULL);
+    // Arguments to a thread would be passed here ---------^
     
-    pthread_join(adder_thr, NULL);
-    printf("Done: %i\n", i);
+    pthread_join(someThread, NULL);
+    printf("Hello from main!"\n);
     return 0;
     
 }

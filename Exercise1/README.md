@@ -3,15 +3,13 @@ Exercise 1 : Hello World
 
 A note about the computers at the real-time lab:
  - They run Linux Mint, Linux Ubuntu and Windows
- - The Ubuntu install is deprecated (it no longer receives security updates), so we are in the process of transitioning to Mint
- - However, the Mint install does not support the Comedi library we will (probably) be using to interface with the elevator hardware... yet.
- - Compiler versions on the Ubuntu install are older, so use Mint maybe?
- - Conclusion: We'll ~~cross~~ burn that bridge when we get to it
-This exercise does not require that you use the machines at the real-time lab, although the C code uses POSIX.
+ - The Ubuntu install is deprecated (it no longer receives security updates), so we reccomend using Mint.
+ - Interfacing with the elevator hardware is done using libComedi, which is linux-only. If - for some reason - you want to do the elevator project on Windows, you're on your own.
+This exercise does not require that you use the machines at the real-time lab. However, the C code uses POSIX, so you'll need a POSIX-compliant OS, like linux or OSX.
 
 Since we are still in the startup-phase, there are no real groups and assigned lab-times this week (7th to 10th Jan.), which means the workspaces are "first come, first served". Due-date is therefore 17th January.
 
-[Go](http://golang.org) has an interactive "Tour" you can take. Its syntax is a bit different, so it may be worth skimming through, or at least using as a quick reference.
+[Go](http://golang.org) has an [interactive "Tour"](http://tour.golang.org/list) you can take. Its syntax is a bit different, so it may be worth skimming through, or at least using as a quick reference.
 
 
 
@@ -32,14 +30,14 @@ A version control system is a tool helps a group of people work on the same file
 You will need some place to store your files, either a decentralized repository online (eg [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/) (which also has free private repos)) or centralized on a common group directory at an external server (do not use the machines on the lab for storage, because you never know who might delete it). You can apply for a group directory [here](http://www.stud.ntnu.no/kundesenter/).
 
  - You can find more info on using the version control console commands here: [Git](http://git-scm.com/), [SVN](http://svnbook.org/), [Mercurial](http://mercurial.selenic.com/)
- - Try [UnGit](https://github.com/FredrikNoren/ungit) as a simpler interface for git. [The video](http://youtu.be/hkBVAi3oKvo) is worth looking at even if you don't plan to use UnGit, since it's a nice explanation of how version control works. NOTE: node.js isn't installed on the machines on the real-time lab yet (I've asked for it to happen). For the time being: Either ~~use git from the command line~~ (Update: this has been a source or problems on Ubuntu, but it works on Mint), or try it on your own machine. Using version control will be most relevant when working on the project, so this can wait for now.
+ - Try [UnGit](https://github.com/FredrikNoren/ungit) as a simpler interface for git. [The video](http://youtu.be/hkBVAi3oKvo) is worth looking at even if you don't plan to use UnGit, since it's a nice explanation of how version control works.
 
 You will probably also want to set up your preferred workflow for coding. Browse through the available text editors and IDEs, and find something that is comfortable to work with. If there is a tool you need that isn't there, tell us.
 When you start working on the project, you may also want to set up a build system, either with a makefile or just a shell script. Since the need for this is both language-dependent and IDE-dependent, we won't go into any details here.
 
  
 3: Why concurrency?
-----------------------
+-------------------
 
 These things should be google-able:
 
@@ -79,10 +77,10 @@ Look at the "helloworld" examples in this directory (top of this page) for how t
 What happens, and why?
 
 
-5: @property typeof(this) save(){}
-----------------------------------
+5: One I Prepared Earlier
+-------------------------
 
-You will fix the above problem in Exercise 2, so you should save your code for later. If you have created a repository, use this opportunity and start putting it to use.
+You will fix the above problem in Exercise 2, so you should save your code for later. If you have started using version control, use this opportunity and start putting it to use.
 
 
 
