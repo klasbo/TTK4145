@@ -37,7 +37,7 @@ We are doing Go a great disservice in this exercise, since it has a message-pass
 
 We also have a more idiomatic way:
  - Create a server that [`select{}`](http://golang.org/ref/spec#Select_statements)s transformations to its own data. Have two other goroutines tell the server to increment & decrement its local variable.
-   - Note that this variable will no longer be global. The proper way to handle this is to create another `select{}`-case where you receive requests for the value.
+   - Note that this variable will no longer be global. The proper way to handle this is to create another `select{}`-case where others can request a copy of the value.
 
 
 Remember from Exercise 1 where we had no good way of waiting for a goroutine to finish? Try sending a message on a separate channel. If you use different channels for the two threads, you will have to use [`select { case... }`](http://golang.org/ref/spec#Select_statements) so that it doesn't matter what order they arrive in.
@@ -45,7 +45,7 @@ Remember from Exercise 1 where we had no good way of waiting for a goroutine to 
 
 ####Python:
 
-Python provides both [Locks](http://docs.python.org/2.7/library/threading.html#lock-objects) (which are like mutexes) and [Queues](http://docs.python.org/2/library/queue.html) (which are like channels). 
+Python provides both [Locks](http://docs.python.org/2.7/library/threading.html#lock-objects) (which are like mutexes) and [Queues](http://docs.python.org/2/library/queue.html) (which are kind of like channels). 
 
 
 
