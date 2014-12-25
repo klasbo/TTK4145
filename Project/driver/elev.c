@@ -14,36 +14,34 @@
 // Number of signals and lamps on a per-floor basis (excl sensor)
 #define N_BUTTONS 3
 
-
 static const int lamp_channel_matrix[N_FLOORS][N_BUTTONS] = {
     {LIGHT_UP1, LIGHT_DOWN1, LIGHT_COMMAND1},
     {LIGHT_UP2, LIGHT_DOWN2, LIGHT_COMMAND2},
     {LIGHT_UP3, LIGHT_DOWN3, LIGHT_COMMAND3},
     {LIGHT_UP4, LIGHT_DOWN4, LIGHT_COMMAND4},
 };
-  
-  
+
 
 static const int button_channel_matrix[N_FLOORS][N_BUTTONS] = {
-    {FLOOR_UP1, FLOOR_DOWN1, FLOOR_COMMAND1},
-    {FLOOR_UP2, FLOOR_DOWN2, FLOOR_COMMAND2},
-    {FLOOR_UP3, FLOOR_DOWN3, FLOOR_COMMAND3},
-    {FLOOR_UP4, FLOOR_DOWN4, FLOOR_COMMAND4},
+    {BUTTON_UP1, BUTTON_DOWN1, BUTTON_COMMAND1},
+    {BUTTON_UP2, BUTTON_DOWN2, BUTTON_COMMAND2},
+    {BUTTON_UP3, BUTTON_DOWN3, BUTTON_COMMAND3},
+    {BUTTON_UP4, BUTTON_DOWN4, BUTTON_COMMAND4},
 };
- 
- 
- 
-int elev_init(void){
+
+int elev_init(void) {
+    int i;
+
     // Init hardware
     if (!io_init())
         return 0;
 
     // Zero all floor button lamps
-    for (int i = 0; i < N_FLOORS; ++i) {
+    for (i = 0; i < N_FLOORS; ++i) {
         if (i != 0)
             elev_set_button_lamp(BUTTON_CALL_DOWN, i, 0);
 
-        if (i != N_FLOORS-1)
+        if (i != N_FLOORS - 1)
             elev_set_button_lamp(BUTTON_CALL_UP, i, 0);
 
         elev_set_button_lamp(BUTTON_COMMAND, i, 0);
@@ -58,13 +56,11 @@ int elev_init(void){
     return 1;
 }
 
-
-
-void elev_set_speed(int speed){
+void elev_set_speed(int speed) {
     // In order to sharply stop the elevator, the direction bit is toggled
     // before setting speed to zero.
     static int last_speed = 0;
-    
+
     // If to start (speed > 0)
     if (speed > 0)
         io_clear_bit(MOTORDIR);
@@ -77,37 +73,69 @@ void elev_set_speed(int speed){
     else if (last_speed > 0)
         io_set_bit(MOTORDIR);
 
-    last_speed = speed ;
+    last_speed = speed;
 
     // Write new setting to motor.
-    io_write_analog(MOTOR, 2048 + 4*abs(speed));
+    io_write_analog(MOTOR, 2048 + 4 * abs(speed));
 }
 
+void elev_set_door_open_lamp(int value) {
+    if (value)
+        io_set_bit(LIGHT_DOOR_OPEN);
+    else
+        io_clear_bit(LIGHT_DOOR_OPEN);
+}
 
+int elev_get_obstruction_signal(void) {
+    return io_read_bit(OBSTRUCTION);
+}
 
-int elev_get_floor_sensor_signal(void){
-    if (io_read_bit(SENSOR1))
+int elev_get_stop_signal(void) {
+    return io_read_bit(STOP);
+}
+
+void elev_set_stop_lamp(int value) {
+    if (value)
+        io_set_bit(LIGHT_STOP);
+    else
+        io_clear_bit(LIGHT_STOP);
+}
+
+int elev_get_floor_sensor_signal(void) {
+    if (io_read_bit(SENSOR_FLOOR1))
         return 0;
-    else if (io_read_bit(SENSOR2))
+    else if (io_read_bit(SENSOR_FLOOR2))
         return 1;
-    else if (io_read_bit(SENSOR3))
+    else if (io_read_bit(SENSOR_FLOOR3))
         return 2;
-    else if (io_read_bit(SENSOR4))
+    else if (io_read_bit(SENSOR_FLOOR4))
         return 3;
     else
         return -1;
 }
 
-
-
-int elev_get_button_signal(elev_button_type_t button, int floor){
+void elev_set_floor_indicator(int floor) {
     assert(floor >= 0);
     assert(floor < N_FLOORS);
-    assert(!(button == BUTTON_CALL_UP && floor == N_FLOORS-1));
+
+    // Binary encoding. One light must always be on.
+    if (floor & 0x02)
+        io_set_bit(LIGHT_FLOOR_IND1);
+    else
+        io_clear_bit(LIGHT_FLOOR_IND1);
+
+    if (floor & 0x01)
+        io_set_bit(LIGHT_FLOOR_IND2);
+    else
+        io_clear_bit(LIGHT_FLOOR_IND2);
+}
+
+int elev_get_button_signal(elev_button_type_t button, int floor) {
+    assert(floor >= 0);
+    assert(floor < N_FLOORS);
+    assert(!(button == BUTTON_CALL_UP && floor == N_FLOORS - 1));
     assert(!(button == BUTTON_CALL_DOWN && floor == 0));
-    assert( button == BUTTON_CALL_UP || 
-            button == BUTTON_CALL_DOWN || 
-            button == BUTTON_COMMAND);
+    assert(button == BUTTON_CALL_UP || button == BUTTON_CALL_DOWN || button == BUTTON_COMMAND);
 
     if (io_read_bit(button_channel_matrix[floor][button]))
         return 1;
@@ -115,75 +143,15 @@ int elev_get_button_signal(elev_button_type_t button, int floor){
         return 0;
 }
 
-
-
-int elev_get_stop_signal(void){
-    return io_read_bit(STOP);
-}
-
-
-
-int elev_get_obstruction_signal(void){
-    return io_read_bit(OBSTRUCTION);
-}
-
-
-
-void elev_set_floor_indicator(int floor){
+void elev_set_button_lamp(elev_button_type_t button, int floor, int value) {
     assert(floor >= 0);
     assert(floor < N_FLOORS);
-
-    // Binary encoding. One light must always be on.
-    if (floor & 0x02)
-        io_set_bit(FLOOR_IND1);
-    else
-        io_clear_bit(FLOOR_IND1);
-        
-    if (floor & 0x01)
-        io_set_bit(FLOOR_IND2);
-    else
-        io_clear_bit(FLOOR_IND2);
-}
-
-
-
-void elev_set_button_lamp(elev_button_type_t button, int floor, int value){
-    assert(floor >= 0);
-    assert(floor < N_FLOORS);
-    assert(!(button == BUTTON_CALL_UP && floor == N_FLOORS-1));
+    assert(!(button == BUTTON_CALL_UP && floor == N_FLOORS - 1));
     assert(!(button == BUTTON_CALL_DOWN && floor == 0));
-    assert( button == BUTTON_CALL_UP ||
-            button == BUTTON_CALL_DOWN ||
-            button == BUTTON_COMMAND);
+    assert(button == BUTTON_CALL_UP || button == BUTTON_CALL_DOWN || button == BUTTON_COMMAND);
 
     if (value)
         io_set_bit(lamp_channel_matrix[floor][button]);
     else
-        io_clear_bit(lamp_channel_matrix[floor][button]);        
+        io_clear_bit(lamp_channel_matrix[floor][button]);
 }
-
-
-
-void elev_set_stop_lamp(int value){
-    if (value)
-        io_set_bit(LIGHT_STOP);
-    else
-        io_clear_bit(LIGHT_STOP);
-}
-
-
-
-void elev_set_door_open_lamp(int value){
-    if (value)
-        io_set_bit(DOOR_OPEN);
-    else
-        io_clear_bit(DOOR_OPEN);
-}
-
-
-
-
-
-
-
-

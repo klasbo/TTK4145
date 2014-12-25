@@ -1,8 +1,11 @@
+# Which compiler to use
+CC = gcc
+
 # Compiler flags go here.
-CFLAGS = -std=c99 -g -Wall -O2 -I . -MMD
+CFLAGS = -g -Wall
 
 # Linker flags go here.
-LDFLAGS = -lpthread -lcomedi -g -lm
+LDFLAGS = -lcomedi -lm
 
 # list of sources
 ELEVSRC = elev.c io.c main.c
@@ -13,37 +16,24 @@ TARGET = lift
 # top-level rule, to compile everything.
 all: $(TARGET)
 
-# Define dependencies
-DEPS = $(shell find -name "*.d")
-
 # Define all object files.
 ELEVOBJ = $(ELEVSRC:.c=.o)
 
 # rule to link the program
 $(TARGET): $(ELEVOBJ)
-	gcc $^ -o $@ $(LDFLAGS)
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 # Compile: create object files from C source files.
 %.o : %.c
-	gcc $(CFLAGS) -c  $< -o $@ 
-
-# Include dependencies, if any.
--include $(DEPS) foo
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
 # rule for cleaning re-compilable files.
 clean:
-	rm -f $(TARGET) $(ELEVOBJ) $(DEPS)
+	rm -f $(TARGET) $(ELEVOBJ)
 
 rebuild:	clean all
 
-# 
-run: rebuild
-	./$(TARGET)
-	make clean
-	
-
-.PHONY: all rebuild clean run
+.PHONY: all rebuild clean
 
 
 #Martin Korsgaard, 2006
-#Edited by Anders Petersen, 2014
