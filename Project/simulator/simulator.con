@@ -1,0 +1,8 @@
+simulator.con
+
+--travelTimeBetweenFloors_ms    1500
+--travelTimePassingFloor_ms     650
+--btnDepressedTime_ms           200
+--comPortToDisplay              43000
+--comPortFromDisplay            43001
+
