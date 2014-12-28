@@ -210,6 +210,7 @@ shared int              prevFloor;
 shared int              nextFloor;
 shared MotorDirection   currDir;
 shared MotorDirection   prevDir;
+__gshared string        moveEvent;
 
 shared int              ioDir;
 shared int              motorAnalogVal;
@@ -274,41 +275,55 @@ void thr_simulationLoop(){
     while(1){
         receive(
             (MotorDirection m){
-                // writeln("received MotorDirChange: prevDir=", prevDir, " currDir=", currDir,
-                //                                 " prevFloor=", prevFloor, " currFloor=", currFloor,
-                //                                 " m=", m);
-                currDir = m;
-                final switch(currDir) with(MotorDirection){
-                case UP:
-                    if(currFloor != -1){
-                        timerEvent_thread.send(thisTid, "dep"~currFloor.to!string, travelTimePassingFloor);
-                    } else {
-                        if(prevDir == MotorDirection.UP){
-                            timerEvent_thread.send(thisTid, "arr"~(prevFloor+1).to!string, travelTimeBetweenFloors);
-                            nextFloor = prevFloor+1;
+                /+
+                writeln("received MotorDirChange:",
+                    "\n  m=", m,
+                    "\n  prevDir=", prevDir, " currDir=", currDir,
+                    "\n  prevFloor=", prevFloor, " currFloor=", currFloor, " nextFloor=", nextFloor);
+                +/
+
+                
+                
+                if(m != currDir){
+                    timerEvent_thread.send(thisTid, moveEvent, CancelEvent());
+                    currDir = m;
+                    
+                    final switch(currDir) with(MotorDirection){
+                    case UP:
+                        if(currFloor != -1){
+                            moveEvent = "dep"~currFloor.to!string;
+                            timerEvent_thread.send(thisTid, moveEvent, travelTimePassingFloor);
+                        } else {
+                            if(prevDir == MotorDirection.UP){
+                                moveEvent = "arr"~(prevFloor+1).to!string;
+                                timerEvent_thread.send(thisTid, moveEvent, travelTimeBetweenFloors);
+                            }
+                            if(prevDir == MotorDirection.DOWN){
+                                moveEvent = "arr"~(prevFloor).to!string;
+                                timerEvent_thread.send(thisTid, moveEvent, travelTimeBetweenFloors);
+                            }
                         }
-                        if(prevDir == MotorDirection.DOWN){
-                            timerEvent_thread.send(thisTid, "arr"~(prevFloor).to!string, travelTimeBetweenFloors);
+                        prevDir = currDir;
+                        break;
+                    case DOWN:
+                        if(currFloor != -1){
+                            moveEvent = "dep"~currFloor.to!string;
+                            timerEvent_thread.send(thisTid, moveEvent, travelTimePassingFloor);
+                        } else {
+                            if(prevDir == MotorDirection.UP){
+                                moveEvent = "arr"~(prevFloor).to!string;
+                                timerEvent_thread.send(thisTid, moveEvent, travelTimeBetweenFloors);
+                            }
+                            if(prevDir == MotorDirection.DOWN){
+                                moveEvent = "arr"~(prevFloor-1).to!string;
+                                timerEvent_thread.send(thisTid, moveEvent, travelTimeBetweenFloors);
+                            }
                         }
+                        prevDir = currDir;
+                        break;
+                    case STOP:
+                        break;
                     }
-                    prevDir = currDir;
-                    break;
-                case DOWN:
-                    if(currFloor != -1){
-                        timerEvent_thread.send(thisTid, "dep"~currFloor.to!string, travelTimePassingFloor);
-                    } else {
-                        if(prevDir == MotorDirection.UP){
-                            timerEvent_thread.send(thisTid, "arr"~(prevFloor).to!string, travelTimeBetweenFloors);
-                        }
-                        if(prevDir == MotorDirection.DOWN){
-                            timerEvent_thread.send(thisTid, "arr"~(prevFloor-1).to!string, travelTimeBetweenFloors);
-                            nextFloor = prevFloor-1;
-                        }
-                    }
-                    prevDir = currDir;
-                    break;
-                case STOP:
-                    break;
                 }
             },
             (Tid t, string s){
@@ -342,34 +357,37 @@ void handleTimerEvent(string s){
                 if(currDir == MotorDirection.UP    &&  (s[3]-'0').to!int < prevFloor){ return; }
                 if(currDir == MotorDirection.DOWN  &&  (s[3]-'0').to!int > prevFloor){ return; }
                 currFloor = prevFloor = (s[3]-'0').to!int;
-                timerEvent_thread.send(thisTid, "dep"~currFloor.to!string, travelTimePassingFloor);
+                moveEvent = "dep"~currFloor.to!string;
+                timerEvent_thread.send(thisTid, moveEvent, travelTimePassingFloor);
                 return;
-            }
-            if(currDir == MotorDirection.STOP){
+            } else {
                 // ignore, elevator stopped before it reached the floor
             }
             return;
 
         case "dep":
-            if(currDir == MotorDirection.UP){
+            final switch(currDir) with(MotorDirection){
+            case UP:
                 if(s[3] == '3'){
                     throw new ElevatorCrash("\nELEVATOR HAS CRASHED: Departed top floor going upward\n");
                 }
                 currFloor = -1;
-                timerEvent_thread.send(thisTid, "arr"~(prevFloor+1).to!string, travelTimeBetweenFloors);
+                moveEvent = "arr"~(prevFloor+1).to!string;
+                timerEvent_thread.send(thisTid, moveEvent, travelTimeBetweenFloors);
                 nextFloor = prevFloor+1;
                 return;
-            }
-            if(currDir == MotorDirection.DOWN){
+            case DOWN:
                 if(s[3] == '0'){
                     throw new ElevatorCrash("\nELEVATOR HAS CRASHED: Departed bottom floor going downward\n");
                 }
                 currFloor = -1;
-                timerEvent_thread.send(thisTid, "arr"~(prevFloor-1).to!string, travelTimeBetweenFloors);
+                moveEvent = "arr"~(prevFloor-1).to!string;
+                timerEvent_thread.send(thisTid, moveEvent, travelTimeBetweenFloors);
                 nextFloor = prevFloor-1;
                 return;
+            case STOP:
+                return;
             }
-            return;
 
         case "btn":
             switch(s[3]){
@@ -519,9 +537,7 @@ void printState(){
     }
     // Other lights
     bg[2][3+flrIndLight*4] = '*';
-    if(obstrSwch){
-        bg[1][46] = '^';
-    }
+    bg[1][46] = obstrSwch ? 'v' : '^';
     if(doorLight){
         bg[2][46] = '*';
     }
