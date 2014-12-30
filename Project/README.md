@@ -128,6 +128,8 @@ We encourage submissions to this list! Tutorials, libraries, articles, blog post
    - [Defactoring](http://raganwald.com/2013/10/08/defactoring.html): Removing flexibility to better express intent
    - [The Future of Programming](http://vimeo.com/71278954) (video): A presentation on what programming may look like 40 years from now... as if it was presented 40 years ago.
    - [http://www.slideshare.net/ScottWlaschin/railway-oriented-programming](Railway Oriented Programming): A functional approach to error handling
+   - [https://www.youtube.com/watch?v=i_oA5ZWLhQc](Practical Unit Testing) (video): "Readable, Maintainable, and Trustworthy"
+   - [https://www.youtube.com/watch?v=3G-LO9T3D1M&t=4h31m25s](Core Principles and Practices for Creating Lightweight Design) (video)
    
 Other
 -----
